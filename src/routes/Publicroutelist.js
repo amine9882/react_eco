@@ -13,6 +13,7 @@ import Cart from '../componente/frontend/Cart';
 // import Checkout from '../components/frontend/Checkout';
 import Checkout from '../componente/frontend/Checkout';
 // import Thankyou from '../components/frontend/Thankyou';
+import Thankyou from '../componente/frontend/Thankyou';
 
 const publicRoutesList = [
     { path: '/', exact: true, name: 'Home', component: Home },
@@ -27,7 +28,7 @@ const publicRoutesList = [
     { path: '/collections/:category/:product', exact: true, name: 'ProductDetail', component: ProductDetail},
     { path: '/cart', exact: true, name: 'Cart', component: Cart },
     { path: '/checkout', exact: true, name: 'Checkout', component: Checkout },
-    // { path: '/thank-you', exact: true, name: 'Thankyou', component: Thankyou },
+    { path: '/thank-you', exact: true, name: 'Thankyou', component: Thankyou },
 ];
 
 export default publicRoutesList
