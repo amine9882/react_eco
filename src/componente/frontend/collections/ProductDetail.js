@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
+// import './App.css';
+import { FaStar } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
 function ProductDetail(props)
@@ -10,7 +12,10 @@ function ProductDetail(props)
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState(1);
-
+    const [ratingInput, setRating] = useState({
+        rating : '',
+       
+    });
     useEffect(() => {
 
         let isMounted = true;
@@ -76,8 +81,31 @@ function ProductDetail(props)
                 swal("Warning",res.data.message,"warning");
             }
         });
-
+               
+    } 
+    const handleInput = (e) => {
+        e.persist();
+        setRating({...ratingInput, [e.target.name]: e.target.value })
     }
+    const handleClick = (e) => {
+        e.preventDefault();
+        
+        const data = {
+            product_id: product.id,
+            rating:ratingInput.rating,
+        }
+        axios.post(`/api/products/${product.id}/ratings?rating=${ratingInput.rating}&product_id=${product.id}`, data).then(res=>{
+            if(res.data.status === 200){
+                //Created - Data Inserted
+                swal("Success",res.data.message,"success");
+            
+            }else if(res.data.status === 404){
+                //Not Found
+                swal("Warning",res.data.message,"warning");
+            }
+        });
+    }
+    
 
     if(loading)
     {
@@ -85,11 +113,10 @@ function ProductDetail(props)
     }
     else
     {
-
+        
         var avail_stock = '';
         if(product.qty > 0)
         {
-            
                 avail_stock = <div>
                     <label className="btn-sm btn-success px-4 mt-2">In stock</label>
                     <div className="row">
@@ -103,6 +130,11 @@ function ProductDetail(props)
                         <div className="col-md-3 mt-3">
                             <button type="button" className="btn btn-primary w-100" onClick={submitAddtocart}>Add to Cart</button>
                         </div>
+                        <div className="col-md-3 mt-3">
+                        <label>Rating</label>
+                        <input type="number" name="rating" onChange={handleInput} value={ratingInput.rating} className="form-control" />
+                        <button onClick={handleClick}>Rating</button>
+                        </div>
                     </div>
                 </div>
                
@@ -113,7 +145,7 @@ function ProductDetail(props)
                 <label className="btn-sm btn-danger px-4 mt-2">Out of stock</label>
             </div>
         }
-    }
+        
 
     return (
         <div>
@@ -142,6 +174,7 @@ function ProductDetail(props)
                                 <s className="ms-2">  Rs: {product.original_price} </s>
                             </h4>
                             <div>
+
                                 {avail_stock}
                             </div>
 
@@ -150,10 +183,41 @@ function ProductDetail(props)
                        </div>
 
                     </div>
+                    <div class="modal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="rating-css">
+                                    <div class="star-icon">
+                                        <input type="radio" value="1" name="product_rating" checked id="rating1"/>
+                                        <label for="rating1" class="fa fa-star"></label>
+                                        <input type="radio" value="2" name="product_rating" id="rating2"/>
+                                        <label for="rating2" class="fa fa-star"></label>
+                                        <input type="radio" value="3" name="product_rating" id="rating3"/>
+                                        <label for="rating3" class="fa fa-star"></label>
+                                        <input type="radio" value="4" name="product_rating" id="rating4"/>
+                                        <label for="rating4" class="fa fa-star"></label>
+                                        <input type="radio" value="5" name="product_rating" id="rating5"/>
+                                        <label for="rating5" class="fa fa-star"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     )
+ }
 }
 
 export default ProductDetail;
