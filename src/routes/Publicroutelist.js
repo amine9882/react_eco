@@ -10,9 +10,7 @@ import ViewCategory from '../componente/frontend/collections/ViewCategory';
 import ViewProduct from '../componente/frontend/collections/ViewProduct';
 import ProductDetail from '../componente/frontend/collections/ProductDetail';
 import Cart from '../componente/frontend/Cart';
-// import Checkout from '../components/frontend/Checkout';
 import Checkout from '../componente/frontend/Checkout';
-// import Thankyou from '../components/frontend/Thankyou';
 import Thankyou from '../componente/frontend/Thankyou';
 
 const publicRoutesList = [

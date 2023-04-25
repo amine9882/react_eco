@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
-// import './App.css';
-import { FaStar } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import "./styles.css";
 
+
+import { useHistory } from 'react-router-dom';
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 function ProductDetail(props)
 {
 
@@ -12,10 +13,53 @@ function ProductDetail(props)
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState(1);
-    const [ratingInput, setRating] = useState({
-        rating : '',
-       
-    });
+    const [number, setNumber] = useState(0);
+    const [hoverStar, setHoverStar] = useState(undefined);
+  
+    const handleText = () => {
+      switch (number || hoverStar) {
+        case 0:
+          return "Evaluate";
+        case 1:
+          return "Dissatifation";
+        case 2:
+          return "Unsatisfied";
+        case 3:
+          return "Normal";
+        case 4:
+          return "Satisfied";
+        case 5:
+          return "Very Satisfied";
+        default:
+          return "Evaluate";
+      }
+    };
+    const handlePlaceHolder = () => {
+        switch (number || hoverStar) {
+          case 0:
+            return "Comment here...";
+          case 1:
+          case 2:
+          case 3:
+          case 4:
+            return "What is your problem?";
+          case 5:
+            return "Why do you like the product?";
+          default:
+            return "Comment here...";
+        }
+      };
+   
+      
+      
+      
+      
+      
+      
+      
+    // const [ratingInput, setRating] = useState({
+    //     rating : '',
+    // });
     useEffect(() => {
 
         let isMounted = true;
@@ -83,28 +127,28 @@ function ProductDetail(props)
         });
                
     } 
-    const handleInput = (e) => {
-        e.persist();
-        setRating({...ratingInput, [e.target.name]: e.target.value })
-    }
-    const handleClick = (e) => {
-        e.preventDefault();
+    // const handleInput = (e) => {
+    //     e.persist();
+    //     setRating({...ratingInput, [e.target.name]: e.target.value })
+    // }
+    // const handleClick = (e) => {
+    //     e.preventDefault();
         
-        const data = {
-            product_id: product.id,
-            rating:ratingInput.rating,
-        }
-        axios.post(`/api/products/${product.id}/ratings?rating=${ratingInput.rating}&product_id=${product.id}`, data).then(res=>{
-            if(res.data.status === 200){
-                //Created - Data Inserted
-                swal("Success",res.data.message,"success");
+    //     const data = {
+    //         product_id: product.id,
+    //         rating:ratingInput.rating,
+    //     }
+    //     axios.post(`/api/products/${product.id}/ratings?rating=${ratingInput.rating}&product_id=${product.id}`, data).then(res=>{
+    //         if(res.data.status === 200){
+    //             //Created - Data Inserted
+    //             swal("Success",res.data.message,"success");
             
-            }else if(res.data.status === 404){
-                //Not Found
-                swal("Warning",res.data.message,"warning");
-            }
-        });
-    }
+    //         }else if(res.data.status === 404){
+    //             //Not Found
+    //             swal("Warning",res.data.message,"warning");
+    //         }
+    //     });
+    // }
     
 
     if(loading)
@@ -130,12 +174,16 @@ function ProductDetail(props)
                         <div className="col-md-3 mt-3">
                             <button type="button" className="btn btn-primary w-100" onClick={submitAddtocart}>Add to Cart</button>
                         </div>
-                        <div className="col-md-3 mt-3">
+                        
+                       
+                        
+                        {/* <div className="col-md-3 mt-3">
                         <label>Rating</label>
                         <input type="number" name="rating" onChange={handleInput} value={ratingInput.rating} className="form-control" />
                         <button onClick={handleClick}>Rating</button>
-                        </div>
+                        </div> */}
                     </div>
+                    
                 </div>
                
         }
@@ -177,42 +225,42 @@ function ProductDetail(props)
 
                                 {avail_stock}
                             </div>
-
-                            <button type="button" className="btn btn-danger mt-3">Add to Wishlist</button>
+                            <div className="col-md-3">
+                                <button type="button" className="btn btn-danger mt-3">Add to Wishlist</button>
+                            </div>
+                            
                            
                        </div>
 
                     </div>
-                    <div class="modal" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="rating-css">
-                                    <div class="star-icon">
-                                        <input type="radio" value="1" name="product_rating" checked id="rating1"/>
-                                        <label for="rating1" class="fa fa-star"></label>
-                                        <input type="radio" value="2" name="product_rating" id="rating2"/>
-                                        <label for="rating2" class="fa fa-star"></label>
-                                        <input type="radio" value="3" name="product_rating" id="rating3"/>
-                                        <label for="rating3" class="fa fa-star"></label>
-                                        <input type="radio" value="4" name="product_rating" id="rating4"/>
-                                        <label for="rating4" class="fa fa-star"></label>
-                                        <input type="radio" value="5" name="product_rating" id="rating5"/>
-                                        <label for="rating5" class="fa fa-star"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                            </div>
-                        </div>
+                    <div className='product'>
+                        <h1>{handleText()}</h1>
+                        {Array(5)
+                        .fill()
+                        .map((_, index) =>
+                            number >= index + 1 || hoverStar >= index + 1 ? (
+                            <AiFillStar
+                                onMouseOver={() => !number && setHoverStar(index + 1)}
+                                onMouseLeave={() => setHoverStar(undefined)}
+                                style={{ color: "orange" }}
+                                onClick={() => setNumber(index + 1)}
+                            />
+                            ) : (
+                            <AiOutlineStar
+                                onMouseOver={() => !number && setHoverStar(index + 1)}
+                                onMouseLeave={() => setHoverStar(undefined)}
+                                style={{ color: "orange" }}
+                                onClick={() => setNumber(index + 1)}
+                            />
+                            )
+                        )}
                     </div>
+                   
+                        <textarea class="form-control" style={{  height: "200px" }} placeholder={handlePlaceHolder()}></textarea>
+                        <div className="col-md-3">
+                            <button type="button" id='btn' className={` ${!number && "disabled"} `}>Evaluate</button>
+                        </div>
+                    
                 </div>
             </div>
         </div>
