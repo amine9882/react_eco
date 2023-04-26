@@ -15,7 +15,9 @@ function ProductDetail(props)
     const [quantity, setQuantity] = useState(1);
     const [number, setNumber] = useState(0);
     const [hoverStar, setHoverStar] = useState(undefined);
-  
+    const [commentInput, setComment] = useState({
+        comment:'',
+    });
     const handleText = () => {
       switch (number || hoverStar) {
         case 0:
@@ -127,28 +129,32 @@ function ProductDetail(props)
         });
                
     } 
+    const handleInputChange = (e) => {
+        setComment({...commentInput, [e.target.name]: e.target.value })
+    };
     // const handleInput = (e) => {
     //     e.persist();
-    //     setRating({...ratingInput, [e.target.name]: e.target.value })
+    //    setComment({...commentInput, [e.target.name]: e.target.value })
     // }
-    // const handleClick = (e) => {
-    //     e.preventDefault();
+    const handleClick = (e) => {
+        e.preventDefault();
         
-    //     const data = {
-    //         product_id: product.id,
-    //         rating:ratingInput.rating,
-    //     }
-    //     axios.post(`/api/products/${product.id}/ratings?rating=${ratingInput.rating}&product_id=${product.id}`, data).then(res=>{
-    //         if(res.data.status === 200){
-    //             //Created - Data Inserted
-    //             swal("Success",res.data.message,"success");
+        const data = {
+            product_id: product.id,
+            rating:number,
+            comment:commentInput.comment,
+        }
+        axios.post(`/api/products/${product.id}/ratings?rating=${number}&product_id=${product.id}&comment=${commentInput.comment}`, data).then(res=>{
+            if(res.data.status === 200){
+                //Created - Data Inserted
+                swal("Success",res.data.message,"success");
             
-    //         }else if(res.data.status === 404){
-    //             //Not Found
-    //             swal("Warning",res.data.message,"warning");
-    //         }
-    //     });
-    // }
+            }else if(res.data.status === 404){
+                //Not Found
+                swal("Warning",res.data.message,"warning");
+            }
+        });
+    }
     
 
     if(loading)
@@ -255,10 +261,16 @@ function ProductDetail(props)
                             )
                         )}
                     </div>
-                   
-                        <textarea class="form-control" style={{  height: "200px" }} placeholder={handlePlaceHolder()}></textarea>
+                    <div className="mb-3">
+                        <label for="validationTextarea" className="form-label">Message:</label>
+                        <textarea className="form-control" name="comment" value={commentInput.comment} placeholder={handlePlaceHolder()} onChange={handleInputChange} required></textarea>
+                        <div className="invalid-feedback">
+                        Please enter a message in the textarea.
+                        </div>
+                    </div>
+                        {/* <textarea class="form-control" style={{  height: "200px" }} onChange={handleInputChange} value={commentInput.comment} placeholder={handlePlaceHolder()}></textarea> */}
                         <div className="col-md-3">
-                            <button type="button" id='btn' className={` ${!number && "disabled"} `}>Evaluate</button>
+                            <button type="button" id='btn' onClick={handleClick} className={` ${!number && "disabled"} `}>Evaluate</button>
                         </div>
                     
                 </div>

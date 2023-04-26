@@ -25,7 +25,39 @@ function Contact() {
   return (
     <div>
       <h1>Contactez-nous</h1>
-      <form>
+        <div className="container py-5">
+            <div className="row justify-content-center">
+                <form className="was-validated">
+                    <div className="col-md-4">
+                        <label for="validationServerUsername" className="form-label">Username</label>
+                        <div className="input-group has-validation">
+                        <span className="input-group-text" id="inputGroupPrepend3">@</span>
+                        <input type="text" class="form-control is-invalid" name="name" value={formData.name} onChange={handleInputChange} required/>
+                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                        </div>
+                    </div>
+                    <div className="mb-3">
+                        <label for="exampleInputEmail1" className="form-label">Email address</label>
+                        <input type="email" className="form-control" name="email" value={formData.email} onChange={handleInputChange}/>
+                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div className="mb-3">
+                        <label for="validationTextarea" className="form-label">Message:</label>
+                        <textarea className="form-control" name="message" value={formData.message} onChange={handleInputChange} required></textarea>
+                        <div className="invalid-feedback">
+                        Please enter a message in the textarea.
+                        </div>
+                    </div>
+                    <br></br>
+                    <div className="mb-3">
+                        <button className="btn btn-primary"  onClick={handleEmail} type="submit">Submit form</button>
+                    </div>
+                </form>
+            </div> 
+        </div>   
+        {/* <form>
         <label>
           Nom:
           <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
@@ -39,7 +71,7 @@ function Contact() {
           <textarea name="message" value={formData.message} onChange={handleInputChange} required />
         </label>
         <button type="button" onClick={handleEmail}>Envoyer</button>
-      </form>
+        </form> */}
     </div>
   );
 
