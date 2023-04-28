@@ -6,6 +6,7 @@ import { Link , useHistory } from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+
 function Home() {
     const responsive = {
         superLargeDesktop: {
@@ -172,6 +173,7 @@ function Home() {
                                     <h5 className="card-title">{item.name}</h5>
                                     <p className="card-text">{item.slug}</p>
                                     <p className="card-text">price:{item.selling_price}DZ</p>
+
                                     <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">See the details</Link>
                                 </div>
                             </div>

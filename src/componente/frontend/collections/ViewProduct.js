@@ -3,14 +3,17 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import { Link, useHistory } from 'react-router-dom';
 
+
 function ViewProduct(props)
 {
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState([]);
     const [category, setCategory] = useState([]);
-
+   
     const productCount = product.length;
+    
+    
 
     useEffect(() => {
 
@@ -55,6 +58,7 @@ function ViewProduct(props)
         {
 
             showProductList = product.map( (item, idx) => {
+                
                 return (
                     <div className="col-md-3" key={idx}>
                         <div className="card">
@@ -65,6 +69,7 @@ function ViewProduct(props)
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`}>
                                     <h5>{ item.name }</h5>
                                 </Link>
+                                
                             </div>
                         </div>
                     </div>

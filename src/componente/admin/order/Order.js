@@ -55,7 +55,7 @@ function Order()
         <div className="container px-4 mt-3">
         <div className="card">
             <div className="card-header">
-                <h4>Orders  </h4>
+                <h4>Orders </h4>
             </div>
             <div className="card-body">
                 <div className="table-responsive">

@@ -72,7 +72,7 @@ function Checkout()
         payment_mode: 'Paid by PayPal',
         payment_id: '',
     }
-
+    
     // Paypal Code
     const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
     const createOrder = (data, actions) =>{
@@ -142,48 +142,6 @@ function Checkout()
                 });
                 break;
 
-            case 'razorpay':
-                axios.post(`/api/validate-order`, data).then(res=>{
-                    if(res.data.status === 200)
-                    {
-                        setError([]);
-                        var options = {
-                            "key": "rzp_test_5AEIUNtEJxBPvS",
-                            "amount": (1 * 100), 
-                            "name": "Funda Reat Ecom",
-                            "description": "Thank you for purchasing with Funda",
-                            "image": "https://example.com/your_logo",
-                            "handler": function (response){
-                                data.payment_id = response.razorpay_payment_id;
-
-                                axios.post(`/api/place-order`, data).then(place_res=>{
-                                    if(place_res.data.status === 200)
-                                    {
-                                        swal("Order Placed Successfully",place_res.data.message,"success");
-                                        history.push('/thank-you');
-                                    }
-                                });
-                            },
-                            "prefill": {
-                                "name": data.firstname + data.lastname,
-                                "email": data.email,
-                                "contact": data.phone
-                            },
-                            "theme": {
-                                "color": "#3399cc"
-                            }
-                        };
-                        var rzp = new window.Razorpay(options);
-                        rzp.open();
-                    }
-                    else if(res.data.status === 422)
-                    {
-                        swal("All fields are mandetory","","error");
-                        setError(res.data.errors);
-                    }
-                });
-                break;
-
             case 'payonline':
                 axios.post(`/api/validate-order`, data).then(res=>{
                     if(res.data.status === 200)
@@ -216,7 +174,31 @@ function Checkout()
     {
         checkout_HTML = <div>
             <div className="row">
+            <div className="col-md-12">
+                <div className="card">
+                    <div className="card-header">
+                        <h4>Recharge the digital currency</h4>
+                        
+                    </div>
+                    <div className='card-body'>
+                    <h5>Please transfer the money manually to the following account</h5>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">type</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="DZD"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Wallet</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Maameri Mohammed Amin"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Wallet number</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="007999990024452487662"/>
+                    </div>
 
+                    </div>
+                </div>
+            </div>   
+            <hr/>     
             <div className="col-md-7">
                 <div className="card">
                     <div className="card-header">
@@ -281,11 +263,16 @@ function Checkout()
                                     <small className="text-danger">{error.zipcode}</small>
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">download certificate</label>
+                                <input class="form-control" type="file" id="formFile"/>
+                            </div>
                             <div className="col-md-12">
                                 <div className="form-group text-end">
                                     <button type="button" className="btn btn-primary mx-1" onClick={ (e) => submitOrder(e, 'cod') }>Place Order</button>
-                                    <button type="button" className="btn btn-primary mx-1" onClick={ (e) => submitOrder(e, 'razorpay') }>Pay by Razorpay</button>
-                                    <button type="button" className="btn btn-warning mx-1" onClick={ (e) => submitOrder(e, 'payonline') }>Pay Online</button>
+                                    
+                                    
+                                    {/* <button type="button" className="btn btn-warning mx-1" onClick={ (e) => submitOrder(e, 'payonline') }>Pay Online</button> */}
 
                                 </div>
                             </div>
@@ -340,14 +327,14 @@ function Checkout()
     return (
         <div>
 
-            <div class="modal fade" id="payOnlineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Online Payment Mode</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="payOnlineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Online Payment Mode</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div className="modal-body">
                         <hr/>
                         <PayPalButton
                             createOrder={(data, actions) => createOrder(data, actions)}
