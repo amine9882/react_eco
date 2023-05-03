@@ -5,7 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { Link , useHistory } from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
-
+import "./styles.css";
 
 function Home() {
     const responsive = {
@@ -166,18 +166,23 @@ function Home() {
         var showProductList = '';
             showProductList = product.map( (item, idx) => {
                 return (
-                    <div className="col-md-3" key={idx}>
-                        <div className="card" style={{width: "16rem", height:"550px"}}>
-                        <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.name}</h5>
-                                    <p className="card-text">{item.slug}</p>
-                                    <p className="card-text">price:{item.selling_price}DZ</p>
-
-                                    <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">See the details</Link>
-                                </div>
+                    <div className="col" key={idx}>
+                        <div className="card text-center" style={{width: "300px", height:"550px"}}>
+                            <div className="card-header">
+                            
+                                <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
+                          
                             </div>
-                        
+                            <div className="card-body">
+                                    <h5 className="card-title">{ item.name }</h5>
+                                
+                                <p class="card-text">{ item.slug }</p>
+                            </div>
+                            <div class="mb-5 d-flex justify-content-around">
+                                <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                            </div>
+                        </div>
                     </div>
                 )
     
@@ -187,17 +192,23 @@ function Home() {
         var showfeaturedList='';    
             showfeaturedList = featured.map( (item, idx) => {
                 return (
-                    <div className="col-md-3" key={idx}>
-                        <div className="card" style={{width: "16rem", height:"550px"}}>
-                        <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.name}</h5>
-                                    <p className="card-text">{item.slug}</p>
-                                    <p className="card-text">price:{item.selling_price}DZ</p>
-                                    <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">See the details</Link>
-                                </div>
+                    <div className="col" key={idx}>
+                        <div className="card text-center" style={{width: "300px", height:"550px"}}>
+                            <div className="card-header">
+                            
+                                <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
+                          
                             </div>
-                        
+                            <div className="card-body">
+                                    <h5 className="card-title">{ item.name }</h5>
+                                
+                                <p class="card-text">{ item.slug }</p>
+                            </div>
+                            <div class="mb-5 d-flex justify-content-around">
+                                <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                            </div>
+                        </div>
                     </div>
                 )
     
@@ -207,17 +218,23 @@ function Home() {
         var Accessoireslist='';    
             Accessoireslist = Accessoires.map( (item, idx) => {
                 return (
-                    <div className="col-md-3" key={idx}>
-                        <div className="card" style={{width: "16rem", height:"550px"}}>
-                        <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.name}</h5>
-                                    <p className="card-text">{item.slug}</p>
-                                    <p className="card-text">price:{item.selling_price}DZ</p>
-                                    <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">See the details</Link>
-                                </div>
+                    <div className="col" key={idx}>
+                        <div className="card text-center" style={{width: "300px", height:"550px"}}>
+                            <div className="card-header">
+                            
+                                <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
+                          
                             </div>
-                        
+                            <div className="card-body">
+                                    <h5 className="card-title">{ item.name }</h5>
+                                
+                                <p class="card-text">{ item.slug }</p>
+                            </div>
+                            <div class="mb-5 d-flex justify-content-around">
+                                <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                            </div>
+                        </div>
                     </div>
                 )
     
@@ -226,17 +243,23 @@ function Home() {
         var Ordinateurslist='';    
             Ordinateurslist = Ordinateurs.map( (item, idx) => {
                 return (
-                    <div className="col-md-3" key={idx}>
-                        <div className="card" style={{width: "16rem", height:"550px"}}>
-                        <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.name}</h5>
-                                    <p className="card-text">{item.slug}</p>
-                                    <p className="card-text">price:{item.selling_price}DZ</p>
-                                    <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">See the details</Link>
-                                </div>
+                    <div className="col" key={idx}>
+                        <div className="card text-center" style={{width: "300px", height:"550px"}}>
+                            <div className="card-header">
+                            
+                                <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
+                          
                             </div>
-                        
+                            <div className="card-body">
+                                    <h5 className="card-title">{ item.name }</h5>
+                                
+                                <p class="card-text">{ item.slug }</p>
+                            </div>
+                            <div class="mb-5 d-flex justify-content-around">
+                                <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                            </div>
+                        </div>
                     </div>
                 )
     
@@ -246,17 +269,23 @@ function Home() {
             var reseauxlist='';    
             reseauxlist = reseaux.map( (item, idx) => {
                 return (
-                    <div className="col-md-3" key={idx}>
-                        <div className="card" style={{width: "16rem", height:"550px"}}>
-                        <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.name}</h5>
-                                    <p className="card-text">{item.slug}</p>
-                                    <p className="card-text">price:{item.selling_price}DZ</p>
-                                    <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">See the details</Link>
-                                </div>
+                    <div className="col" key={idx}>
+                        <div className="card text-center" style={{width: "300px", height:"550px"}}>
+                            <div className="card-header">
+                            
+                                <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
+                          
                             </div>
-                        
+                            <div className="card-body">
+                                    <h5 className="card-title">{ item.name }</h5>
+                                
+                                <p class="card-text">{ item.slug }</p>
+                            </div>
+                            <div class="mb-5 d-flex justify-content-around">
+                                <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                            </div>
+                        </div>
                     </div>
                 )
     
@@ -264,17 +293,23 @@ function Home() {
             var Composantslist='';    
             Composantslist = Composants.map( (item, idx) => {
                 return (
-                    <div className="col-md-3" key={idx}>
-                        <div className="card" style={{width: "16rem", height:"550px"}}>
-                        <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{item.name}</h5>
-                                    <p className="card-text">{item.slug}</p>
-                                    <p className="card-text">price:{item.selling_price}DZ</p>
-                                    <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">See the details</Link>
-                                </div>
+                    <div className="col" key={idx}>
+                        <div className="card text-center" style={{width: "300px", height:"550px"}}>
+                            <div className="card-header">
+                            
+                                <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
+                          
                             </div>
-                        
+                            <div className="card-body">
+                                    <h5 className="card-title">{ item.name }</h5>
+                                
+                                <p class="card-text">{ item.slug }</p>
+                            </div>
+                            <div class="mb-5 d-flex justify-content-around">
+                                <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                            </div>
+                        </div>
                     </div>
                 )
     

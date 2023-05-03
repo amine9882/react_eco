@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router-dom';
@@ -16,6 +16,11 @@ function Checkout()
     
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
+    // const [pricture, setPicture] = useState([]);
+    const [image, setImage] = useState(null);
+    const [imageName, setImageName] = useState('');
+    
+
     var totalCartPrice = 0;
 
     const [checkoutInput, setCheckoutInput] = useState({
@@ -27,6 +32,7 @@ function Checkout()
         city: '',
         state: '',
         zipcode: '',
+
     });
     const [error, setError] = useState([]);
 
@@ -59,78 +65,61 @@ function Checkout()
         e.persist();
         setCheckoutInput({...checkoutInput, [e.target.name]: e.target.value });
     }
-
-    var orderinfo_data = {
-        firstname: checkoutInput.firstname,
-        lastname: checkoutInput.lastname,
-        phone: checkoutInput.phone,
-        email: checkoutInput.email,
-        address: checkoutInput.address,
-        city: checkoutInput.city,
-        state: checkoutInput.state,
-        zipcode: checkoutInput.zipcode,
-        payment_mode: 'Paid by PayPal',
-        payment_id: '',
-    }
+    // const handleImage = (e) => {
+    //     setPicture({ image: e.target.files[0] });
+    // }
+    function handleImageChange(event) {
+        setImage(event.target.files[0]);
+        setImageName(event.target.files[0].name);
+      }
     
-    // Paypal Code
-    const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
-    const createOrder = (data, actions) =>{
-        return actions.order.create({
-          purchase_units: [
-            {
-              amount: {
-                value: totalCartPrice,
-              },
-            },
-          ],
-        });
-    };
-    const onApprove = (data, actions) => {
-        // return actions.order.capture();
-        return actions.order.capture().then(function(details) {
-            console.log(details);
-            orderinfo_data.payment_id = details.id;
+    
+   
 
-            axios.post(`/api/place-order`, orderinfo_data).then(res=>{
-                if(res.data.status === 200)
-                {
-                    swal("Order Placed Successfully",res.data.message,"success");
-                    setError([]);
-                    history.push('/thank-you');
-                }
-                else if(res.data.status === 422)
-                {
-                    swal("All fields are mandetory","","error");
-                    setError(res.data.errors);
-                }
-            });
-        });
-    };
-    // End-Paypal Code
-
-    const submitOrder = (e, payment_mode) => {
+    const submitOrder = (e) => {
         e.preventDefault();
 
-        var data = {
-            firstname: checkoutInput.firstname,
-            lastname: checkoutInput.lastname,
-            phone: checkoutInput.phone,
-            email: checkoutInput.email,
-            address: checkoutInput.address,
-            city: checkoutInput.city,
-            state: checkoutInput.state,
-            zipcode: checkoutInput.zipcode,
-            payment_mode: payment_mode,
-            payment_id: '',
-        }
+        // var data = {
+        //     firstname: checkoutInput.firstname,
+        //     lastname: checkoutInput.lastname,
+        //     phone: checkoutInput.phone,
+        //     email: checkoutInput.email,
+        //     address: checkoutInput.address,
+        //     city: checkoutInput.city,
+        //     state: checkoutInput.state,
+        //     zipcode: checkoutInput.zipcode,
+        //     payment_mode: 'cod',
+        //     payment_id: '',
+        // }
+        const formData = new FormData();
+        // formData.append('image', pricture.image);
+        formData.append('image', image);
+        formData.append('firstname', checkoutInput.firstname);
+        formData.append('lastname', checkoutInput.lastname);
+        formData.append('phone', checkoutInput.phone);
+        formData.append('email', checkoutInput.email);
+        formData.append('address', checkoutInput.address);
+        formData.append('city', checkoutInput.city);
+        formData.append('state', checkoutInput.state);
+        formData.append('zipcode', checkoutInput.zipcode);
+       
+        // console.log('image',image);
+        // console.log(formData);
 
-        switch (payment_mode) {
-            case 'cod':
-                axios.post(`/api/place-order`, data).then(res=>{
+                axios.post(`/api/place-order`, formData,{ headers: {'Content-Type': 'multipart/form-data'}}).then(res=>{
                     if(res.data.status === 200)
                     {
                         swal("Order Placed Successfully",res.data.message,"success");
+                        setCheckoutInput({...checkoutInput, 
+                            firstname: '',
+                            lastname: '',
+                            phone: '',
+                            email: '',
+                            address: '',
+                            city: '',
+                            state: '',
+                            zipcode: '',
+                        });
                         setError([]);
                         history.push('/thank-you');
                     }
@@ -140,27 +129,10 @@ function Checkout()
                         setError(res.data.errors);
                     }
                 });
-                break;
+               
 
-            case 'payonline':
-                axios.post(`/api/validate-order`, data).then(res=>{
-                    if(res.data.status === 200)
-                    {
-                        setError([]);
-                        var myModal = new window.bootstrap.Modal(document.getElementById('payOnlineModal'));
-                        myModal.show();
-                    }
-                    else if(res.data.status === 422)
-                    {
-                        swal("All fields are mandetory","","error");
-                        setError(res.data.errors);
-                    }
-                });
-                break;
+            
         
-            default:
-                break;
-        }
        
     }
 
@@ -264,8 +236,18 @@ function Checkout()
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="formFile" class="form-label">download certificate</label>
+{/*                            
+                                <label for="formFile"  name="image" onChange={handleImage} class="form-label">download certificate</label>
                                 <input class="form-control" type="file" id="formFile"/>
+                                <small className="text-danger">{error.image}</small> */}
+                                <label htmlFor="image"> download certificate:</label>
+                                <input
+                                type="file"
+                                className="form-control-file"
+                                id="image"
+                                onChange={handleImageChange}
+                                />
+                                {imageName && <p>{imageName}</p>}
                             </div>
                             <div className="col-md-12">
                                 <div className="form-group text-end">
@@ -327,23 +309,7 @@ function Checkout()
     return (
         <div>
 
-            <div className="modal fade" id="payOnlineModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Online Payment Mode</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <hr/>
-                        <PayPalButton
-                            createOrder={(data, actions) => createOrder(data, actions)}
-                            onApprove={(data, actions) => onApprove(data, actions)}
-                        />
-                    </div>
-                    </div>
-                </div>
-            </div>
+           
 
             <div className="py-3 bg-warning">
                 <div className="container">

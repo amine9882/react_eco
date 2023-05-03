@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import swal from 'sweetalert';
+import "./styles.css";
 import { Link, useHistory } from 'react-router-dom';
 
 
@@ -60,16 +61,21 @@ function ViewProduct(props)
             showProductList = product.map( (item, idx) => {
                 
                 return (
-                    <div className="col-md-3" key={idx}>
-                        <div className="card">
-                            <Link to={`/collections/${item.category.slug}/${item.slug}`}>
+                    <div className="col" key={idx}>
+                        <div className="card text-center">
+                            <div className="card-header">
+                            
                                 <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                            </Link>
+                          
+                            </div>
                             <div className="card-body">
-                                <Link to={`/collections/${item.category.slug}/${item.slug}`}>
-                                    <h5>{ item.name }</h5>
-                                </Link>
+                                    <h5 className="card-title">{ item.name }</h5>
                                 
+                                <p class="card-text">{ item.slug }</p>
+                            </div>
+                            <div class="mb-5 d-flex justify-content-around">
+                                <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
                             </div>
                         </div>
                     </div>
@@ -93,12 +99,12 @@ function ViewProduct(props)
                </div>
             </div>
 
-            <div className="py-3">
-               <div className="container">
-                   <div className="row">
+            <div className="container py-5">
+               
+                   <div className="row row-cols-1 row-cols-md-3 g-4 py-5">
                        {showProductList}
                    </div>
-               </div>
+               
             </div>
         </div>
     );
