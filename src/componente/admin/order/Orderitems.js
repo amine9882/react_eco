@@ -55,7 +55,7 @@ function Orderitems()
                     <td>{item.qty}</td>
                     <td>{item.price}</td>
                     <td>
-                        <button className="btn btn-success btn-sm">View</button>
+                        <Link to={`orderitem-certificate/${item.id}`} className="btn btn-success btn-sm">View</Link>
                     </td>
                 </tr>
             )
@@ -87,9 +87,6 @@ function Orderitems()
                             </thead>
                             <tbody>
                                {display_orderitem}
-
-                              
-                                  
                             </tbody>
                         </table>
                     </div>

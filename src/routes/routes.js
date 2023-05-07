@@ -9,7 +9,8 @@ import ViewProduct from "../componente/admin/product/ViewProduct";
 import EditProduct from"../componente/admin/product/EditProduct";
 import Order from "../componente/admin/order/Order";
 import Orderitems from "../componente/admin/order/Orderitems";
-
+// import Showcertificate from "../componente/admin/order/Showcertificate";
+import Showcertificate from "../componente/admin/order/Showcertificate";
 const routes = [
     {path:'/admin' ,exact: true, name:'Admin'},
     {path:'/admin/dashboard' ,exact: true, name:'Dashboard',Component:Dashboard},
@@ -22,6 +23,7 @@ const routes = [
     {path: '/admin/edit-product/:id', exact: true, name: 'EditProduct', Component: EditProduct},
     {path: '/admin/orders', exact: true, name: 'Order', Component: Order },
     {path: '/admin/orderitems', exact: true, name: 'Orderitems', Component: Orderitems },
+    {path: '/admin/orderitem-certificate/:id', exact: true, name: 'Showcertificate', Component: Showcertificate },
     
 ];
 export default routes;

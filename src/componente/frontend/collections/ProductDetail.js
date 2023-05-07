@@ -148,8 +148,13 @@ function ProductDetail(props)
             if(res.data.status === 200){
                 //Created - Data Inserted
                 swal("Success",res.data.message,"success");
+                
             
             }else if(res.data.status === 404){
+                //Not Found
+                swal("Warning",res.data.message,"warning");
+            }
+            else if(res.data.status === 403){
                 //Not Found
                 swal("Warning",res.data.message,"warning");
             }

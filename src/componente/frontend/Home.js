@@ -6,6 +6,8 @@ import { Link , useHistory } from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 import "./styles.css";
+import RatingStars from "react-rating-stars-component";
+
 
 function Home() {
     const responsive = {
@@ -36,6 +38,8 @@ function Home() {
         const [Ordinateurs,setOrdinateurs]= useState([]);
         const [reseaux,setReseaux]= useState([]);
         const [Composants,setComposants]= useState([]);
+        const [rating,setRating]= useState([]);
+
         
 
         
@@ -150,6 +154,23 @@ function Home() {
                 }
             }
         });
+        axios.get(`/api/getRecommendedProducts`).then(res=>{
+            if(isMounted)
+            {
+                if(res.data.status === 200)
+                {
+                    setRating(res.data.popular_products);
+                    
+                    setLoading(false);
+                }
+                
+                else if(res.data.status === 404)
+                {
+                   
+                    swal("Warning",res.data.message,"error");
+                }
+            }
+        });
 
         return () => {
             isMounted = false
@@ -163,6 +184,43 @@ function Home() {
     }
     else
     {
+
+        //rating
+        var ratingshow = '';
+        ratingshow = rating.map( (item, idx) => {
+            return (
+                <div className="col" key={idx}>
+                    <div className="card text-center" style={{width: "300px", height:"550px"}}>
+                        <div className="card-header">
+                        
+                            <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
+                      
+                        </div>
+                        <div className="card-body">
+                                <h5 className="card-title">{ item.name }</h5>
+                            
+                            <p class="card-text">{ item.slug }</p>
+                        </div>
+                        <div className="mb-3 d-flex justify-content-around">
+                                
+                                <RatingStars
+                               count={5}
+                               value={item.average_rating}
+                               size={24}
+                               activeColor="#ffd700"
+                               edit={false}
+                               />
+                             
+                           </div>
+                        <div class="mb-5 d-flex justify-content-around">
+                            <h3 className='card-price'>{item.selling_price}DZD</h3>
+                            <Link to={`/collections/${item.category_slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                        </div>
+                    </div>
+                </div>
+            )
+
+        });
         var showProductList = '';
             showProductList = product.map( (item, idx) => {
                 return (
@@ -178,6 +236,17 @@ function Home() {
                                 
                                 <p class="card-text">{ item.slug }</p>
                             </div>
+                            <div className="mb-3 d-flex justify-content-around">
+                                    
+                                    <RatingStars
+                                   count={5}
+                                   value={3}
+                                   size={24}
+                                   activeColor="#ffd700"
+                                   edit={false}
+                                   />
+                                 
+                               </div>
                             <div class="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
@@ -204,6 +273,17 @@ function Home() {
                                 
                                 <p class="card-text">{ item.slug }</p>
                             </div>
+                             <div className="mb-3 d-flex justify-content-around">
+                                    
+                                     <RatingStars
+                                    count={5}
+                                    value={5}
+                                    size={24}
+                                    activeColor="#ffd700"
+                                    edit={false}
+                                    />
+                                  
+                                </div>
                             <div class="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
@@ -230,6 +310,17 @@ function Home() {
                                 
                                 <p class="card-text">{ item.slug }</p>
                             </div>
+                            <div className="mb-3 d-flex justify-content-around">
+                                    
+                                    <RatingStars
+                                   count={5}
+                                   value={3}
+                                   size={24}
+                                   activeColor="#ffd700"
+                                   edit={false}
+                                   />
+                                 
+                               </div>
                             <div class="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
@@ -255,6 +346,17 @@ function Home() {
                                 
                                 <p class="card-text">{ item.slug }</p>
                             </div>
+                            <div className="mb-3 d-flex justify-content-around">
+                                    
+                                    <RatingStars
+                                   count={5}
+                                   value={4}
+                                   size={24}
+                                   activeColor="#ffd700"
+                                   edit={false}
+                                   />
+                                 
+                               </div>
                             <div class="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
@@ -281,6 +383,17 @@ function Home() {
                                 
                                 <p class="card-text">{ item.slug }</p>
                             </div>
+                            <div className="mb-3 d-flex justify-content-around">
+                                    
+                                    <RatingStars
+                                   count={5}
+                                   value={4}
+                                   size={24}
+                                   activeColor="#ffd700"
+                                   edit={false}
+                                   />
+                                 
+                               </div>
                             <div class="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
@@ -305,6 +418,17 @@ function Home() {
                                 
                                 <p class="card-text">{ item.slug }</p>
                             </div>
+                            <div className="mb-3 d-flex justify-content-around">
+                                    
+                                    <RatingStars
+                                   count={5}
+                                   value={3}
+                                   size={24}
+                                   activeColor="#ffd700"
+                                   edit={false}
+                                   />
+                                 
+                               </div>
                             <div class="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
@@ -347,6 +471,15 @@ function Home() {
             </div>
             <div className="py-5">
                  <div className="container-fluid">
+                 <div className="group-title">
+                        <div className="top-title">
+                            <h2 style={{ textAlign:"center" }}>rating</h2>
+                        </div>
+                        <hr></hr>
+                        <Carousel responsive={responsive}>
+                        {ratingshow}
+                        </Carousel>
+                    </div>
                     <div className="group-title">
                         <div className="top-title">
                             <h2 style={{ textAlign:"center" }}>ALL Products</h2>
@@ -405,6 +538,21 @@ function Home() {
                     
                 </div>
            </div>
+           {/* about us */}
+           <div class="container my-5">
+                <h1 class="text-center mb-4">About Us</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="https://via.placeholder.com/500x350" class="img-fluid rounded"/>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Who We Are</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et ultrices odio, nec tincidunt tellus. Suspendisse potenti. Duis ut elementum turpis, eu lobortis quam. Sed mattis semper mauris, in efficitur ante ultrices eget. Pellentesque ut iaculis enim. Vestibulum ultricies mauris at lobortis imperdiet. Donec consequat pharetra lectus eu luctus. Nulla interdum magna vitae erat tincidunt, at suscipit mi fringilla.</p>
+                        <h3>Our Mission</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et ultrices odio, nec tincidunt tellus.</p>
+                    </div> 
+                </div>
+            </div>
               {/*footer*/}
               <footer className="bg-primary text-white">
                 <div className="container py-5">

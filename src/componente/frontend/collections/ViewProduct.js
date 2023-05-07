@@ -3,10 +3,11 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import "./styles.css";
 import { Link, useHistory } from 'react-router-dom';
-
+import RatingStars from "react-rating-stars-component";
 
 function ViewProduct(props)
 {
+   
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState([]);
@@ -15,11 +16,12 @@ function ViewProduct(props)
     const productCount = product.length;
     
     
-
+    const [averageRating, setAverageRating] = useState(null);
+    console.log('props',props);
+   
     useEffect(() => {
 
-        let isMounted = true;
-
+        let isMounted = true; 
         const product_slug = props.match.params.slug;
         axios.get(`/api/fetchproducts/${product_slug}`).then(res=>{
             if(isMounted)
@@ -46,6 +48,35 @@ function ViewProduct(props)
             isMounted = false
         };
     }, [props.match.params.slug, history]);
+    useEffect(() => {
+        let isMounted = true; 
+       
+        const product_id = props.match.params.id;
+        axios.get(`/api/products/${product_id}/avg-rating`).then(res=>{
+                console.log('product_id',product_id);
+                 console.log('data',res.data);
+                
+                if(isMounted)
+                {
+                    if(res.data.status === 200)
+                    {
+                        
+                        setAverageRating(res.data.average_rating);
+                        setLoading(false);   
+                    }
+                    else if(res.data.status === 403)
+                    {
+                        setAverageRating(res.data.average_rating);
+                        setLoading(false);
+                    }
+                }
+        
+        });
+        return () => {
+            isMounted = false
+        };
+       
+    }, [props.match.params.id, history]);
 
 
     if(loading)
@@ -58,11 +89,11 @@ function ViewProduct(props)
         if(productCount)
         {
 
-            showProductList = product.map( (item, idx) => {
+            showProductList = product.map((item, idx) => {
                 
                 return (
                     <div className="col" key={idx}>
-                        <div className="card text-center">
+                        <div className="card text-center" style={{width: "300px", height:"500px"}}>
                             <div className="card-header">
                             
                                 <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
@@ -71,10 +102,23 @@ function ViewProduct(props)
                             <div className="card-body">
                                     <h5 className="card-title">{ item.name }</h5>
                                 
-                                <p class="card-text">{ item.slug }</p>
+                                <p className="card-text">{ item.slug }</p>
                             </div>
-                            <div class="mb-5 d-flex justify-content-around">
+                                {/* <div className="mb-3 d-flex justify-content-around">
+                                    
+                                     <RatingStars
+                                    count={5}
+                                    value={3}
+                                    size={24}
+                                    activeColor="#ffd700"
+                                    edit={false}
+                                    />
+                                  
+                                </div>
+                                */}
+                            <div className="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
+                                
                                 <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
                             </div>
                         </div>
