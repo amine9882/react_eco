@@ -52,12 +52,12 @@ function Home() {
         let isMounted = true;
 
         
-        axios.get(`/api/homefetchproducts`).then(res=>{
+        axios.get(`/api/store`).then(res=>{
             if(isMounted)
             {
                 if(res.data.status === 200)
                 {
-                    setProduct(res.data.product);
+                    setProduct(res.data.cate);
                     
                     setLoading(false);
                 }
@@ -69,12 +69,13 @@ function Home() {
                 }
             }
         });
-        axios.get(`/api/homeproductsfeatured`).then(res=>{
+       
+        axios.get(`/api/cateone`).then(res=>{
             if(isMounted)
             {
                 if(res.data.status === 200)
                 {
-                    setfeatured(res.data.product);
+                    setAccessoires(res.data.cate_one);
                     
                     setLoading(false);
                 }
@@ -86,12 +87,12 @@ function Home() {
                 }
             }
         });
-        axios.get(`/api/categoryidone`).then(res=>{
+        axios.get(`/api/catetwo`).then(res=>{
             if(isMounted)
             {
                 if(res.data.status === 200)
                 {
-                    setAccessoires(res.data.product);
+                    setOrdinateurs(res.data.cate_two);
                     
                     setLoading(false);
                 }
@@ -103,12 +104,12 @@ function Home() {
                 }
             }
         });
-        axios.get(`/api/categoryidtwo`).then(res=>{
+        axios.get(`/api/catethree`).then(res=>{
             if(isMounted)
             {
                 if(res.data.status === 200)
                 {
-                    setOrdinateurs(res.data.product);
+                    setReseaux(res.data.cate_three);
                     
                     setLoading(false);
                 }
@@ -120,29 +121,12 @@ function Home() {
                 }
             }
         });
-        axios.get(`/api/categoryidthree`).then(res=>{
+        axios.get(`/api/catefour`).then(res=>{
             if(isMounted)
             {
                 if(res.data.status === 200)
                 {
-                    setReseaux(res.data.product);
-                    
-                    setLoading(false);
-                }
-                
-                else if(res.data.status === 404)
-                {
-                   
-                    swal("Warning",res.data.message,"error");
-                }
-            }
-        });
-        axios.get(`/api/categoryidfour`).then(res=>{
-            if(isMounted)
-            {
-                if(res.data.status === 200)
-                {
-                    setComposants(res.data.product);
+                    setComposants(res.data.cate_four);
                     
                     setLoading(false);
                 }
@@ -240,7 +224,7 @@ function Home() {
                                     
                                     <RatingStars
                                    count={5}
-                                   value={3}
+                                   value={item.average_rating}
                                    size={24}
                                    activeColor="#ffd700"
                                    edit={false}
@@ -249,7 +233,7 @@ function Home() {
                                </div>
                             <div class="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
-                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                                <Link to={`/collections/${item.category_slug}/${item.slug}`} className="btn btn-primary">details</Link>
                             </div>
                         </div>
                     </div>
@@ -257,42 +241,6 @@ function Home() {
     
             });
 
-            // featured
-        var showfeaturedList='';    
-            showfeaturedList = featured.map( (item, idx) => {
-                return (
-                    <div className="col" key={idx}>
-                        <div className="card text-center" style={{width: "300px", height:"550px"}}>
-                            <div className="card-header">
-                            
-                                <img src={`http://localhost:8000/${item.image}`} className="card-img-top" alt={item.name} />
-                          
-                            </div>
-                            <div className="card-body">
-                                    <h5 className="card-title">{ item.name }</h5>
-                                
-                                <p class="card-text">{ item.slug }</p>
-                            </div>
-                             <div className="mb-3 d-flex justify-content-around">
-                                    
-                                     <RatingStars
-                                    count={5}
-                                    value={5}
-                                    size={24}
-                                    activeColor="#ffd700"
-                                    edit={false}
-                                    />
-                                  
-                                </div>
-                            <div class="mb-5 d-flex justify-content-around">
-                                <h3 className='card-price'>{item.selling_price}DZD</h3>
-                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
-                            </div>
-                        </div>
-                    </div>
-                )
-    
-            });
         
         //accsoire
         var Accessoireslist='';    
@@ -308,22 +256,22 @@ function Home() {
                             <div className="card-body">
                                     <h5 className="card-title">{ item.name }</h5>
                                 
-                                <p class="card-text">{ item.slug }</p>
+                                <p className="card-text">{ item.slug }</p>
                             </div>
                             <div className="mb-3 d-flex justify-content-around">
                                     
                                     <RatingStars
                                    count={5}
-                                   value={3}
+                                   value={item.average_rating}
                                    size={24}
                                    activeColor="#ffd700"
                                    edit={false}
                                    />
                                  
                                </div>
-                            <div class="mb-5 d-flex justify-content-around">
+                            <div className="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
-                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                                <Link to={`/collections/${item.category_slug}/${item.slug}`} className="btn btn-primary">details</Link>
                             </div>
                         </div>
                     </div>
@@ -344,22 +292,22 @@ function Home() {
                             <div className="card-body">
                                     <h5 className="card-title">{ item.name }</h5>
                                 
-                                <p class="card-text">{ item.slug }</p>
+                                <p className="card-text">{item.slug }</p>
                             </div>
                             <div className="mb-3 d-flex justify-content-around">
                                     
                                     <RatingStars
                                    count={5}
-                                   value={4}
+                                   value={item.average_rating}
                                    size={24}
                                    activeColor="#ffd700"
                                    edit={false}
                                    />
                                  
                                </div>
-                            <div class="mb-5 d-flex justify-content-around">
+                            <div className="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
-                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                                <Link to={`/collections/${item.category_slug}/${item.slug}`} className="btn btn-primary">details</Link>
                             </div>
                         </div>
                     </div>
@@ -387,22 +335,23 @@ function Home() {
                                     
                                     <RatingStars
                                    count={5}
-                                   value={4}
+                                   value={item.average_rating}
                                    size={24}
                                    activeColor="#ffd700"
                                    edit={false}
                                    />
                                  
                                </div>
-                            <div class="mb-5 d-flex justify-content-around">
+                            <div className="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
-                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                                <Link to={`/collections/${item.category_slug}/${item.slug}`} className="btn btn-primary">details</Link>
                             </div>
                         </div>
                     </div>
                 )
     
             });   
+            //composants
             var Composantslist='';    
             Composantslist = Composants.map( (item, idx) => {
                 return (
@@ -422,16 +371,16 @@ function Home() {
                                     
                                     <RatingStars
                                    count={5}
-                                   value={3}
+                                   value={item.average_rating}
                                    size={24}
                                    activeColor="#ffd700"
                                    edit={false}
                                    />
                                  
                                </div>
-                            <div class="mb-5 d-flex justify-content-around">
+                            <div className="mb-5 d-flex justify-content-around">
                                 <h3 className='card-price'>{item.selling_price}DZD</h3>
-                                <Link to={`/collections/${item.category.slug}/${item.slug}`} className="btn btn-primary">details</Link>
+                                <Link to={`/collections/${item.category_slug}/${item.slug}`} className="btn btn-primary">details</Link>
                             </div>
                         </div>
                     </div>
@@ -473,7 +422,7 @@ function Home() {
                  <div className="container-fluid">
                  <div className="group-title">
                         <div className="top-title">
-                            <h2 style={{ textAlign:"center" }}>rating</h2>
+                            <h2 style={{ textAlign:"center" }}>Trend-products</h2>
                         </div>
                         <hr></hr>
                         <Carousel responsive={responsive}>
@@ -489,15 +438,7 @@ function Home() {
                         {showProductList}
                         </Carousel>
                     </div>
-                    <div className="group-title">
-                        <div className="top-title">
-                            <h2 style={{ textAlign:"center" }}>featured</h2>
-                        </div>
-                        <hr></hr>
-                        <Carousel responsive={responsive}>
-                        {showfeaturedList}
-                        </Carousel>
-                    </div>
+                   
                     <div className="group-title">
                         <div className="top-title">
                             <h2 style={{ textAlign:"center" }}>Accessoires d'Ordinateurs</h2>
