@@ -194,7 +194,7 @@ function Home() {
                                activeColor="#ffd700"
                                edit={false}
                                />
-                             
+                            
                            </div>
                         <div class="mb-5 d-flex justify-content-around">
                             <h3 className='card-price'>{item.selling_price}DZD</h3>
@@ -419,7 +419,7 @@ function Home() {
                 </button>
             </div>
             <div className="py-5">
-                 <div className="container-fluid">
+                 <div className=" container-fluid bg-trasparent my-4 p-3">
                  <div className="group-title">
                         <div className="top-title">
                             <h2 style={{ textAlign:"center" }}>Trend-products</h2>

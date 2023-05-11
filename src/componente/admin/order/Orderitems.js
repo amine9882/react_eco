@@ -38,13 +38,30 @@ function Orderitems()
         return <h4>Loading Orders...</h4>
     }
     else
-    {
+    {   
+       
         display_orderitem = viewOrderitems.map( (item) => {
             // console.log(item);
+            var purch ='';
+            if(item.purchased == 0)
+            {
+                purch = <div>
+                   
+                        <Link to={`orderitem-certificate/${item.id}`} className="btn btn-success btn-sm">View</Link>
+                    
+                </div>
+
+            }
+            else
+            {
+                purch = <div>
+                   <p class="text-center">Confirmed</p>
+                </div>
+            }
             return (
                 <tr key={item.id}>
                     <td>{item.id}</td>
-                    <td>{item.order.firstname}</td>
+                    <td>{item.order.firstname} {item.order.lastname}</td>
                     <td>{item.order.lastname}</td>
                     <td>{item.order.email}</td>
                     <td>{item.order.city}</td>
@@ -54,8 +71,10 @@ function Orderitems()
                     {/* <td>{item.order.image}</td> */}
                     <td>{item.qty}</td>
                     <td>{item.price}</td>
+                    
                     <td>
-                        <Link to={`orderitem-certificate/${item.id}`} className="btn btn-success btn-sm">View</Link>
+                        {purch}
+                        {/* <Link to={`orderitem-certificate/${item.id}`} className="btn btn-success btn-sm">View</Link> */}
                     </td>
                 </tr>
             )
@@ -74,7 +93,7 @@ function Orderitems()
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>First name </th>
+                                    <th>Full name </th>
                                     <th>Last name</th>
                                     <th>Email </th>
                                     <th>City</th>

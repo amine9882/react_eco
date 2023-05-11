@@ -7,10 +7,7 @@ function Showcertificate(props)
 {
     const history = useHistory();
     const [loading, setLoading] = useState(true);
-    const [show, setShow] = useState({
-        id:'',     
-       
-    })  ;
+    const [show, setShow] = useState({})  ;
    
     useEffect(() => {
         let isMounted = true;
@@ -19,7 +16,7 @@ function Showcertificate(props)
         axios.get(`/api/admin/orderitems/${id}`).then(res=>{
             if(res.data.status === 200)
             {
-                setShow(res.data.certifi);
+                setShow(res.data.orders);
                 setLoading(false);
                 console.log('res',res)
             }
@@ -36,25 +33,85 @@ function Showcertificate(props)
 
     }, [props.match.params.id, history]);
 
-    //  var certificate = "";
-    //     certificate =  Object.values(show).map((item) => {
-    //      console.log(item);
-    //     return (
-    //         <p key={item.id}>  
-    //             <img src={`http://localhost:8000/${item.image}`} width="400px" />   
-    //         </p>        
-    //     );
-    // }
-    // )     
+    const handleClick = (e) => {
+        e.preventDefault();
+        
+        const id = props.match.params.id;
+        const data = {
+            purchased :'1',
+        }
+        axios.put(`/api/update-orderitems/${id}`,data).then(res=>{
+            if(res.data.status === 200){
+              
+                swal("Success",res.data.message,"success");
+                
+            
+            }else if(res.data.status === 404){
+                //Not Found
+                swal("Warning",res.data.message,"warning");
+            }
+            
+        });
+    }
+
+    
     
     if(loading)
     {
         return <h4>Loading...</h4>
     }
     else
-    {   
+    {       
+            var confn = '';
+            var list = '';
+           list= show.map((item, idx) => {
+            
     
-      return(
+          if(item.purchased == 0){
+            confn = <div> 
+            <button type="button" onClick={handleClick}className="btn btn-danger mt-3">confirmation</button>
+            </div>
+            }
+            else
+            {
+                confn = <div>
+                    <label className="list-group-item list-group-item-action list-group-item-success">Confirmed</label>
+                </div>
+            }
+            return (
+                <div className='col' key={idx}>
+                    <p key={item.id}></p>
+                    <ul className="list-group">
+                        <li className="list-group-item">Full name : {item.firstname} {item.lastname}</li>
+                        <li className="list-group-item">phone : {item.phone}</li>
+                        <li className="list-group-item">email : {item.email}</li>
+                        <li className="list-group-item">address : {item.address}</li>
+                        <li className="list-group-item">city : {item.city}</li>
+                        <li className="list-group-item">Product : {item.Product_name}</li>
+                        <li className="list-group-item">Quantity : {item.qty}</li>
+                        <li className="list-group-item">total price : {item.price}</li>
+                        
+                    </ul>
+                    <img src={`http://localhost:8000/${item.image}`} width="400px" /> 
+
+                </div>
+                
+            )
+            });
+        //    var confn = '';
+    
+        //   if(item.purchased == 0){
+        //     confn = <div> 
+        //     <button type="button" onClick={handleClick}className="btn btn-danger mt-3">confirmation</button>
+        //     </div>
+        //     }
+        //     else
+        //     {
+        //         confn = <div>
+        //             <label className="btn-sm btn-danger px-4 mt-2">Confirmed</label>
+        //         </div>
+        //     }
+        return(
             <div className="container px-4">
                 <div className="card mt-4">
                     <div className="card-header">
@@ -63,13 +120,16 @@ function Showcertificate(props)
                         </h4>
                     </div>
                     <div className="card-body">
-                        {/* {certificate} */}
+                        
                         <div>   
-
-                                {show.id}
+                            {list}
+                                {/* {orders.id}
                                 {show.order_id}
-                                <img src={`http://localhost:8000/${show.order.image}`} width="400px" />  
-                                    
+                                <img src={`http://localhost:8000/${show.image}`} width="400px" />   */}
+                                <div className="col-md-3">
+                                    {confn}
+                                </div>
+                                
                         </div>   
                     </div>  
                 </div>    
