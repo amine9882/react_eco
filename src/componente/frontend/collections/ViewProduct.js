@@ -48,35 +48,7 @@ function ViewProduct(props)
             isMounted = false
         };
     }, [props.match.params.slug, history]);
-    useEffect(() => {
-        let isMounted = true; 
-       
-        const product_id = props.match.params.id;
-        axios.get(`/api/products/${product_id}/avg-rating`).then(res=>{
-                console.log('product_id',product_id);
-                 console.log('data',res.data);
-                
-                if(isMounted)
-                {
-                    if(res.data.status === 200)
-                    {
-                        
-                        setAverageRating(res.data.average_rating);
-                        setLoading(false);   
-                    }
-                    else if(res.data.status === 403)
-                    {
-                        setAverageRating(res.data.average_rating);
-                        setLoading(false);
-                    }
-                }
-        
-        });
-        return () => {
-            isMounted = false
-        };
-       
-    }, [props.match.params.id, history]);
+   
 
 
     if(loading)

@@ -12,6 +12,7 @@ import ProductDetail from '../componente/frontend/collections/ProductDetail';
 import Cart from '../componente/frontend/Cart';
 import Checkout from '../componente/frontend/Checkout';
 import Thankyou from '../componente/frontend/Thankyou';
+import Search from '../componente/frontend/Search';
 
 const publicRoutesList = [
     { path: '/', exact: true, name: 'Home', component: Home },
@@ -26,6 +27,7 @@ const publicRoutesList = [
     { path: '/collections/:category/:product', exact: true, name: 'ProductDetail', component: ProductDetail},
     { path: '/cart', exact: true, name: 'Cart', component: Cart },
     { path: '/checkout', exact: true, name: 'Checkout', component: Checkout },
+    { path: '/search', exact : true, name: 'Search' , component: Search },
     { path: '/thank-you', exact: true, name: 'Thankyou', component: Thankyou },
 ];
 

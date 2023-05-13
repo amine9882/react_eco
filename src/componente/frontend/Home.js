@@ -39,11 +39,7 @@ function Home() {
         const [reseaux,setReseaux]= useState([]);
         const [Composants,setComposants]= useState([]);
         const [rating,setRating]= useState([]);
-
-        
-
-        
-        
+  
         const productCount = product.length;
 
          

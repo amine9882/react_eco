@@ -53,8 +53,21 @@ function Showcertificate(props)
             
         });
     }
+    const deleteItem = (e, id) => {
+        e.preventDefault();
+        
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Deleting";
 
-    
+        axios.delete(`/api/delete-item/${id}`).then(res=>{
+            if(res.data.status === 200)
+            {
+                swal("Success",res.data.message,"success");
+                history.push('/admin/orderitems');
+            }
+           
+        });
+    }
     
     if(loading)
     {
@@ -68,8 +81,14 @@ function Showcertificate(props)
             
     
           if(item.purchased == 0){
-            confn = <div> 
-            <button type="button" onClick={handleClick}className="btn btn-danger mt-3">confirmation</button>
+            confn = <div className='row'> 
+                <div className='col'>
+                <button type="button" onClick={handleClick}className="btn btn-primary mt-3">confirmation</button>
+                </div>
+                <div className='col'>
+                <button type="button" onClick={(e)=>deleteItem(e, item.id)} className="btn btn-danger mt-3 float-end">Cancel</button>
+                </div>
+           
             </div>
             }
             else
@@ -92,7 +111,7 @@ function Showcertificate(props)
                         <li className="list-group-item">total price : {item.price}</li>
                         
                     </ul>
-                    <img src={`http://localhost:8000/${item.image}`} width="400px" /> 
+                    <img src={`http://localhost:8000/${item.image}`} className="mt-3" width="400px" /> 
 
                 </div>
                 

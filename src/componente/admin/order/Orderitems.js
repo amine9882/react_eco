@@ -62,14 +62,14 @@ function Orderitems()
                 <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{item.order.firstname} {item.order.lastname}</td>
-                    <td>{item.order.lastname}</td>
+                    <td>{item.created_at} </td>
                     <td>{item.order.email}</td>
                     <td>{item.order.city}</td>
                     <td><img src={`http://localhost:8000/${item.order.image}`} width="100px" alt={item.order.name} />
                     </td>
 
                     {/* <td>{item.order.image}</td> */}
-                    <td>{item.qty}</td>
+                    <td>CCP</td>
                     <td>{item.price}</td>
                     
                     <td>
@@ -94,11 +94,11 @@ function Orderitems()
                                 <tr>
                                     <th>ID</th>
                                     <th>Full name </th>
-                                    <th>Last name</th>
+                                    <th>Data Orderd</th>
                                     <th>Email </th>
                                     <th>City</th>
                                     <th>Certificate</th>
-                                    <th>Quntite</th>
+                                    <th>Payment method</th>
                                     <th>Price</th>
                                     <th>Action</th>
                                     
