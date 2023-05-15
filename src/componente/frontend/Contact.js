@@ -24,39 +24,41 @@ function Contact() {
 
   return (
     <div>
-      <h1>Contactez-nous</h1>
-        <div className="container py-5">
-            <div className="row justify-content-center">
-                <form className="was-validated">
+      
+      <div className="container my-5">
+                <h1 className="text-center mb-4">Contact Us</h1>
+                <div className="row">
+                    <div className="col-md-8">
+                     <form>
+                        <div className="mb-3">
+                          <label for="exampleInputEmail1" className="form-label">Full Name</label>
+                          <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                        </div>
+                        <div className="mb-3">
+                          <label for="exampleInputEmail1" className="form-label">Email address</label>
+                          <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div className="mb-3">
+                          <div className="form-floating">
+                            <textarea className="form-control" name="message" value={formData.message} onChange={handleInputChange} placeholder="Leave a comment here" id="floatingTextarea2"  style={{ height:"100px"}}></textarea>
+                            <label for="floatingTextarea2">Message</label>
+                          </div>
+                        </div>
+                        
+                        <button type="submit"  onClick={handleEmail} className="btn btn-primary">Submit</button>
+                      </form>
+                    </div>
                     <div className="col-md-4">
-                        <label for="validationServerUsername" className="form-label">Username</label>
-                        <div className="input-group has-validation">
-                        <span className="input-group-text" id="inputGroupPrepend3">@</span>
-                        <input type="text" class="form-control is-invalid" name="name" value={formData.name} onChange={handleInputChange} required/>
-                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                            Please choose a username.
-                        </div>
-                        </div>
-                    </div>
-                    <div className="mb-3">
-                        <label for="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" name="email" value={formData.email} onChange={handleInputChange}/>
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div className="mb-3">
-                        <label for="validationTextarea" className="form-label">Message:</label>
-                        <textarea className="form-control" name="message" value={formData.message} onChange={handleInputChange} required></textarea>
-                        <div className="invalid-feedback">
-                        Please enter a message in the textarea.
-                        </div>
-                    </div>
-                    <br></br>
-                    <div className="mb-3">
-                        <button className="btn btn-primary"  onClick={handleEmail} type="submit">Submit form</button>
-                    </div>
-                </form>
+                        <h3>Contact Info</h3>
+                        <p>Univ Chlef</p>
+                        <p>Oulad fares,Chlef,Algerie</p>
+                        <p>Mobile:+213 0666666666</p>
+                        <p>Email:TechTrend@gmail.com</p>
+                        
+                    </div> 
+                </div>
             </div> 
-        </div>   
         {/* <form>
         <label>
           Nom:

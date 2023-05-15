@@ -69,6 +69,7 @@ function Showcertificate(props)
         });
     }
     
+   
     if(loading)
     {
         return <h4>Loading...</h4>
@@ -83,7 +84,7 @@ function Showcertificate(props)
           if(item.purchased == 0){
             confn = <div className='row'> 
                 <div className='col'>
-                <button type="button" onClick={handleClick}className="btn btn-primary mt-3">confirmation</button>
+                <button type="button" onClick={handleClick}className="btn btn-primary mt-3" >confirmation</button>
                 </div>
                 <div className='col'>
                 <button type="button" onClick={(e)=>deleteItem(e, item.id)} className="btn btn-danger mt-3 float-end">Cancel</button>

@@ -476,13 +476,13 @@ function Home() {
                 </div>
            </div>
            {/* about us */}
-           <div class="container my-5">
-                <h1 class="text-center mb-4">About Us</h1>
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="https://via.placeholder.com/500x350" class="img-fluid rounded"/>
+           <div className="container my-5">
+                <h1 className="text-center mb-4">About Us</h1>
+                <div className="row">
+                    <div className="col-md-6">
+                        <img src="/img/vp.jpg" className="img-fluid rounded"/>
                     </div>
-                    <div class="col-md-6">
+                    <div className="col-md-6">
                         <h3>Who We Are</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer et ultrices odio, nec tincidunt tellus. Suspendisse potenti. Duis ut elementum turpis, eu lobortis quam. Sed mattis semper mauris, in efficitur ante ultrices eget. Pellentesque ut iaculis enim. Vestibulum ultricies mauris at lobortis imperdiet. Donec consequat pharetra lectus eu luctus. Nulla interdum magna vitae erat tincidunt, at suscipit mi fringilla.</p>
                         <h3>Our Mission</h3>

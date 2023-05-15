@@ -17,7 +17,7 @@ function Navbar() {
     const handleSearchInputChange = (event) => {
         setSearchInput(event.target.value);
     };
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
         history.push(`/search?q=${searchInput}`);
@@ -91,9 +91,7 @@ function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link active" to="/">Home</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/about">About</Link>
-                        </li>
+                        
                         <li className="nav-item">
                             <Link className="nav-link" to="/contact">Contact</Link>
                         </li>
